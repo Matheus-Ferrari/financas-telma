@@ -359,11 +359,10 @@ function telaMes() {
   return `
     ${estado.itens.length ? '' : `<section class="cartao">
       <h2>Bem-vinda!</h2>
-      <p>Ainda não há nada cadastrado neste aparelho.</p>
-      <p>Se você recebeu o arquivo de dados (<strong>${ARQUIVO_INICIAL}</strong>) ou um backup, abra-o aqui. Ou comece cadastrando suas contas.</p>
+      <p>Este aparelho ainda não tem os gastos da Telma.</p>
+      <p>Para ver tudo, abra o <strong>link com os dados</strong> que foi enviado pelo WhatsApp. Este site não guarda os dados: eles chegam pelo link e ficam só neste aparelho.</p>
       <div class="botoes">
-        <button type="button" class="btn btn-principal" data-acao="importar">📂 Abrir arquivo de dados</button>
-        <button type="button" class="btn" data-acao="nova-despesa">+ Adicionar conta</button>
+        <button type="button" class="btn" data-acao="importar">📂 Abrir arquivo de backup</button>
       </div>
     </section>`}
 
