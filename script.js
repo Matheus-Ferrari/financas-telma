@@ -765,15 +765,19 @@ async function enviarLink() {
   }
 }
 
-/* Abre os dados que vieram no link. O mesmo link aberto de novo é ignorado, para não desfazer o que já foi marcado. */
+/* Abre os dados que vieram no link. O link fica no endereço (e no atalho da tela inicial), então um link
+   igual ou mais antigo que o último aberto é ignorado, para não desfazer o que já foi marcado. */
 async function abrirLink() {
   const m = location.hash.match(/^#dados=([\w-]+)$/);
   if (!m) return;
-  history.replaceState(null, '', location.pathname + location.search);
   try {
     const dados = JSON.parse(await base64Gunzip(m[1]));
-    if (estado && dados.geradoEm && dados.geradoEm === estado.linkImportado) return;
-    if (estado && estado.itens.length && !confirm('Este link traz dados novos. Substituir os dados deste aparelho por eles?')) return;
+    const temDados = estado && estado.itens.length;
+    if (temDados && !(dados.geradoEm > estado.linkImportado)) return;
+    if (temDados && !confirm('Este link traz dados mais novos. Substituir os dados deste aparelho por eles?')) {
+      estado.linkImportado = dados.geradoEm;
+      return;
+    }
     estado = normalizar(dados);
     estado.linkImportado = dados.geradoEm || '';
   } catch (e) {
