@@ -1,0 +1,3 @@
+# Dados financeiros pessoais: nunca publicar.
+# O app não precisa de nenhum .json para funcionar.
+*.json

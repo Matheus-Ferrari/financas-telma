@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1118">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Finanças da Telma</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-conteudo">
+      <h1>Finanças da Telma</h1>
+      <div class="seletor-mes">
+        <button type="button" class="seta" data-acao="mes-anterior" aria-label="Mês anterior">◀</button>
+        <select id="mes" aria-label="Escolha o mês"></select>
+        <button type="button" class="seta" data-acao="mes-seguinte" aria-label="Próximo mês">▶</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app"><p>Carregando…</p></main>
+  <noscript><p class="cartao">Este aplicativo precisa do JavaScript ativado no navegador.</p></noscript>
+
+  <input type="file" id="arquivo" hidden>
+
+  <dialog id="janela" aria-labelledby="form-titulo">
+    <form id="form" novalidate>
+      <h2 id="form-titulo">Nova conta</h2>
+      <input type="hidden" name="id">
+      <input type="hidden" name="tipo">
+
+      <label class="campo">Descrição
+        <input name="descricao" autocomplete="off" maxlength="120" placeholder="Ex.: Farmácia">
+      </label>
+      <p class="alerta" id="aviso-fatura" hidden>Não cadastre o pagamento da fatura como conta nova: isso contaria o gasto duas vezes. Use o botão “Paguei tudo deste cartão”.</p>
+
+      <label class="campo">Valor (R$)
+        <input name="valor" inputmode="decimal" autocomplete="off" placeholder="Ex.: 30,80">
+        <span class="ajuda so-parcelada">Valor de <strong>cada parcela</strong>, como aparece na fatura.</span>
+      </label>
+
+      <fieldset class="opcoes">
+        <legend>Como é?</legend>
+        <div class="opcoes-lista">
+          <label><input type="radio" name="repeticao" value="unica"> Uma vez</label>
+          <label class="so-despesa"><input type="radio" name="repeticao" value="parcelada"> Parcelada</label>
+          <label><input type="radio" name="repeticao" value="mensal"> Todo mês</label>
+        </div>
+      </fieldset>
+
+      <div class="duas-colunas so-parcelada">
+        <label class="campo">Parcela nº
+          <input name="parcelaAtual" type="number" inputmode="numeric" min="1" max="120">
+        </label>
+        <label class="campo">de quantas?
+          <input name="parcelaTotal" type="number" inputmode="numeric" min="1" max="120">
+        </label>
+      </div>
+
+      <label class="campo"><span id="rotulo-mes">Mês da fatura</span>
+        <select name="mes"></select>
+        <span class="ajuda so-parcelada">Mês da fatura em que aparece a parcela informada acima. As outras parcelas são calculadas sozinhas.</span>
+      </label>
+
+      <label class="campo so-mensal">Até qual mês?
+        <select name="mesFim"></select>
+      </label>
+
+      <label class="campo so-despesa">Cartão ou conta
+        <select name="cartao"></select>
+      </label>
+      <label class="campo" id="campo-novo-cartao" hidden>Nome do novo cartão
+        <input name="novoCartao" maxlength="60" autocomplete="off" placeholder="Ex.: Nubank — Telma">
+      </label>
+
+      <label class="campo so-despesa">A compra é dividida com outras pessoas?
+        <select name="dividirPor"></select>
+        <span class="ajuda" id="previa-divisao"></span>
+      </label>
+
+      <label class="campo so-despesa">Data da compra (opcional)
+        <input type="date" name="dataCompra">
+        <span class="ajuda">Pode ser de outro mês. Ex.: compra em outubro, paga na fatura de novembro.</span>
+      </label>
+
+      <label class="campo so-despesa">Vencimento (opcional)
+        <input type="date" name="vencimento">
+      </label>
+
+      <label class="campo so-despesa">Categoria
+        <select name="categoria"></select>
+      </label>
+
+      <label class="campo">Observações
+        <textarea name="obs" rows="3" maxlength="500"></textarea>
+      </label>
+
+      <p class="erro" id="form-erro" role="alert" hidden></p>
+
+      <div class="form-botoes">
+        <button type="submit" class="btn btn-principal">Salvar</button>
+        <button type="button" class="btn" data-acao="fechar-form">Cancelar</button>
+      </div>
+      <button type="button" class="btn btn-perigo btn-largo" data-acao="excluir" id="btn-excluir">Excluir</button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
